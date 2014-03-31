@@ -39,12 +39,7 @@ public class DataFlow extends Configured implements Tool {
 	 */
 	@Override
 	public int run(String[] args) throws Exception {
-		TezSession session = null;
 		
-		Configuration conf = new Configuration();
-		conf.setBoolean(ShuffleVertexManager.TEZ_AM_SHUFFLE_VERTEX_MANAGER_ENABLE_AUTO_PARALLEL,false);
-		LOG.info("create tez session.");
-		session=SessionCreator.getSession(conf);
 		String input="/";
 		String output="/";
 		boolean isPrintHeader=false;
@@ -62,6 +57,14 @@ public class DataFlow extends Configured implements Tool {
 		if(isPrintHeader){
 			readTraceHeader(input+".info");
 		}else{
+			
+			TezSession session = null;
+			
+			Configuration conf = new Configuration();
+			conf.setBoolean(ShuffleVertexManager.TEZ_AM_SHUFFLE_VERTEX_MANAGER_ENABLE_AUTO_PARALLEL,false);
+			LOG.info("create tez session.");
+			session=SessionCreator.getSession(conf);
+			
 			LOG.info("output :"+output);
 			try {
 			LOG.info("create dag job.");
